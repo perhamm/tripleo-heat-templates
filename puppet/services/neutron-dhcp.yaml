@@ -28,7 +28,7 @@ parameters:
     description: If True, DHCP provide metadata route to VM.
     type: boolean
   NeutronEnableForceMetadata:
-    default: false
+    default: True
     description: If True, DHCP always provides metadata route to VM.
     type: boolean
   MonitoringSubscriptionNeutronDhcp:

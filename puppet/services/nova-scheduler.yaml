@@ -67,6 +67,8 @@ outputs:
         map_merge:
           - get_attr: [NovaBase, role_data, config_settings]
           - nova::ram_allocation_ratio: '1.0'
+            nova::block_device_allocate_retries: 300
+            nova::block_device_allocate_retries_interval: 50
             nova::scheduler::filter::scheduler_available_filters: {get_param: NovaSchedulerAvailableFilters}
             nova::scheduler::filter::scheduler_default_filters: {get_param: NovaSchedulerDefaultFilters}
             nova::scheduler::discover_hosts_in_cells_interval: {get_param: NovaSchedulerDiscoverHostsInCellsInterval}

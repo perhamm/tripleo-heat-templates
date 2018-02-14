@@ -48,6 +48,8 @@ outputs:
         map_merge:
           - get_attr: [NovaBase, role_data, config_settings]
           - nova::vncproxy::enabled: true
+            nova::block_device_allocate_retries: 300
+            nova::block_device_allocate_retries_interval: 50
             nova::vncproxy::common::vncproxy_protocol: {get_param: [EndpointMap, NovaVNCProxyPublic, protocol]}
             nova::vncproxy::common::vncproxy_host: {get_param: [EndpointMap, NovaVNCProxyPublic, host_nobrackets]}
             nova::vncproxy::common::vncproxy_port: {get_param: [EndpointMap, NovaVNCProxyPublic, port]}

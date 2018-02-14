@@ -81,6 +81,8 @@ outputs:
                 - 13778
           nova::wsgi::apache_placement::api_port: '8778'
           nova::wsgi::apache_placement::ssl: {get_param: EnableInternalTLS}
+          nova::block_device_allocate_retries: 300
+          nova::block_device_allocate_retries_interval: 50
           # NOTE: bind IP is found in Heat replacing the network name with the local node IP
           # for the given network; replacement examples (eg. for internal_api):
           # internal_api -> IP

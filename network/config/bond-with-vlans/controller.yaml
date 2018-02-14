@@ -12,7 +12,7 @@ parameters:
     type: string
   InternalApiIpSubnet:
     default: ''
-    description: IP address/subnet on the internal API network
+    description: IP address/subnet on the internal_api network
     type: string
   StorageIpSubnet:
     default: ''
@@ -20,7 +20,7 @@ parameters:
     type: string
   StorageMgmtIpSubnet:
     default: ''
-    description: IP address/subnet on the storage mgmt network
+    description: IP address/subnet on the storage_mgmt network
     type: string
   TenantIpSubnet:
     default: ''
@@ -32,45 +32,39 @@ parameters:
     type: string
   BondInterfaceOvsOptions:
     default: bond_mode=active-backup
-    description: The ovs_options string for the bond interface. Set things like lacp=active and/or bond_mode=balance-slb using
-      this option.
+    description: 'The ovs_options or bonding_options string for the bond
+      interface. Set things like lacp=active and/or bond_mode=balance-slb
+      for OVS bonds or like mode=4 for Linux bonds using this option.'
     type: string
-    constraints:
-    - allowed_pattern: ^((?!balance.tcp).)*$
-      description: 'The balance-tcp bond mode is known to cause packet loss and
-
-        should not be used in BondInterfaceOvsOptions.
-
-        '
-  ExternalNetworkVlanID:
-    default: 10
-    description: Vlan ID for the external network traffic.
-    type: number
   InternalApiNetworkVlanID:
-    default: 20
+    default: 3031
     description: Vlan ID for the internal_api network traffic.
     type: number
   StorageNetworkVlanID:
-    default: 30
+    default: 3032
     description: Vlan ID for the storage network traffic.
     type: number
   StorageMgmtNetworkVlanID:
-    default: 40
+    default: 3033
     description: Vlan ID for the storage mgmt network traffic.
     type: number
   TenantNetworkVlanID:
-    default: 50
+    default: 3034
     description: Vlan ID for the tenant network traffic.
     type: number
   ManagementNetworkVlanID:
-    default: 60
+    default: 3035
+    description: Vlan ID for the management network traffic.
+    type: number
+  ExternalNetworkVlanID:
+    default: ''
     description: Vlan ID for the management network traffic.
     type: number
   ControlPlaneDefaultRoute: # Override this via parameter_defaults
     description: The default route of the control plane network.
     type: string
   ExternalInterfaceDefaultRoute:
-    default: 10.0.0.1
+    default: 10.209.81.254
     description: default route for the external network
     type: string
   ManagementInterfaceDefaultRoute: # Commented out by default in this template
@@ -113,10 +107,21 @@ resources:
                 - ip_netmask: 169.254.169.254/32
                   next_hop:
                     get_param: EC2MetadataIp
+              - type: interface
+                name: nic2
+                use_dhcp: false
               - type: ovs_bridge
                 name: bridge_name
                 dns_servers:
                   get_param: DnsServers
+                use_dhcp: false
+                addresses:
+                - ip_netmask:
+                    get_param: ExternalIpSubnet
+                routes:
+                - default: true
+                  next_hop:
+                    get_param: ExternalInterfaceDefaultRoute
                 members:
                 - type: ovs_bond
                   name: bond1
@@ -124,21 +129,10 @@ resources:
                     get_param: BondInterfaceOvsOptions
                   members:
                   - type: interface
-                    name: nic2
+                    name: nic3
                     primary: true
                   - type: interface
-                    name: nic3
-                - type: vlan
-                  device: bond1
-                  vlan_id:
-                    get_param: ExternalNetworkVlanID
-                  addresses:
-                  - ip_netmask:
-                      get_param: ExternalIpSubnet
-                  routes:
-                  - default: true
-                    next_hop:
-                      get_param: ExternalInterfaceDefaultRoute
+                    name: nic4
                 - type: vlan
                   device: bond1
                   vlan_id:

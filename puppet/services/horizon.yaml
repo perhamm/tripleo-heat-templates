@@ -47,18 +47,6 @@ parameters:
   MonitoringSubscriptionHorizon:
     default: 'overcloud-horizon'
     type: string
-  HorizonVhostExtraParams:
-    default:
-      add_listen: false
-      priority: 10
-      access_log_format: '%a %l %u %t \"%r\" %>s %b \"%%{}{Referer}i\" \"%%{}{User-Agent}i\"'
-      options: ['FollowSymLinks','MultiViews']
-    description: Extra parameters for Horizon vhost configuration
-    type: json
-  HorizonCustomizationModule:
-    default: ''
-    description: Horizon has a global overrides mechanism available to perform customizations
-    type: string
 
 conditions:
 
@@ -72,6 +60,7 @@ outputs:
       monitoring_subscription: {get_param: MonitoringSubscriptionHorizon}
       config_settings:
         map_merge:
+        - horizon::help_url: 'https://access.redhat.com/documentation/en/red-hat-openstack-platform/'
         - horizon::allowed_hosts: {get_param: HorizonAllowedHosts}
           tripleo.horizon.firewall_rules:
             '126 horizon':
@@ -79,12 +68,23 @@ outputs:
                 - 80
                 - 443
           horizon::enable_secure_proxy_ssl_header: true
-          horizon::disable_password_reveal: true
+          horizon::available_themes:
+            - { name: 'default', label: 'Default', path: 'themes/default' }
+            - { name: 'material', label: 'Material', path: 'themes/material' }
+          horizon::default_theme: default
+          horizon::password_retrieve: true
+          horizon::neutron_options:
+            enable_distributed_router: true
+          horizon::disable_password_reveal: false
           horizon::enforce_password_check: true
           horizon::disallow_iframe_embed: true
           horizon::cache_backend: django.core.cache.backends.memcached.MemcachedCache
           horizon::django_session_engine: 'django.contrib.sessions.backends.cache'
-          horizon::vhost_extra_params: {get_param: HorizonVhostExtraParams}
+          horizon::vhost_extra_params:
+            add_listen: false
+            priority: 10
+            access_log_format: '%a %l %u %t \"%r\" %>s %b \"%%{}{Referer}i\" \"%%{}{User-Agent}i\"'
+            options: ['FollowSymLinks','MultiViews']
           horizon::bind_address: {get_param: [ServiceNetMap, HorizonNetwork]}
           horizon::keystone_url: {get_param: [EndpointMap, KeystoneInternal, uri]}
           horizon::password_validator: {get_param: [HorizonPasswordValidator]}
@@ -97,7 +97,6 @@ outputs:
                   - {get_param: HorizonSecret}
                   - {get_param: [DefaultPasswords, horizon_secret]}
           memcached_ipv6: {get_param: MemcachedIPv6}
-          horizon::customization_module: {get_param: HorizonCustomizationModule}
         -
           if:
           - debug_empty
@@ -122,10 +121,3 @@ outputs:
           tags: step1
           when: httpd_enabled.rc == 0
           service: name=httpd state=stopped
-      service_config_settings:
-        haproxy:
-          tripleo.horizon.firewall_rules:
-            '127 horizon':
-              dport:
-                - 80
-                - 443

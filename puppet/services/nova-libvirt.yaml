@@ -54,6 +54,8 @@ outputs:
           - nova::compute::libvirt::manage_libvirt_services: false
           # we manage migration in nova common puppet profile
             nova::compute::libvirt::migration_support: false
+            nova::block_device_allocate_retries: 300
+            nova::block_device_allocate_retries_interval: 50
             tripleo::profile::base::nova::manage_migration: true
             tripleo::profile::base::nova::libvirt_enabled: true
             nova::compute::libvirt::services::libvirt_virt_type: {get_param: NovaComputeLibvirtType}

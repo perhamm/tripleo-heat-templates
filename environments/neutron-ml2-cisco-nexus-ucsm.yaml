@@ -16,10 +16,8 @@ parameter_defaults:
   NetworkNexusSviRoundRobin: 'false'
   NetworkNexusProviderVlanNamePrefix: 'p-'
   NetworkNexusPersistentSwitchConfig: 'false'
-  NetworkNexusNeverCacheSshConnection: 'false'
-  NetworkNexusSwitchHeartbeatTime: 30
+  NetworkNexusSwitchHeartbeatTime: 0
   NetworkNexusSwitchReplayCount: 3
-  NetworkNexusCfgDriver: 'restapi'
   NetworkNexusProviderVlanAutoCreate: 'true'
   NetworkNexusProviderVlanAutoTrunk: 'true'
   NetworkNexusVxlanGlobalConfig: 'false'

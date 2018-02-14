@@ -1,91 +1,161 @@
 # Environment file demonstrating how to pre-assign IPs to all node types
 resource_registry:
-  OS::TripleO::Controller::Ports::ExternalPort: ../network/ports/external_from_pool.yaml
-  OS::TripleO::Controller::Ports::InternalApiPort: ../network/ports/internal_api_from_pool.yaml
-  OS::TripleO::Controller::Ports::StoragePort: ../network/ports/storage_from_pool.yaml
-  OS::TripleO::Controller::Ports::StorageMgmtPort: ../network/ports/storage_mgmt_from_pool.yaml
-  OS::TripleO::Controller::Ports::TenantPort: ../network/ports/tenant_from_pool.yaml
-  # Management network is optional and disabled by default
-  #OS::TripleO::Controller::Ports::ManagementPort: ../network/ports/management_from_pool.yaml
+# Port assignments for the controller role
+  OS::TripleO::Controller::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external_from_pool.yaml
+  OS::TripleO::Controller::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api_from_pool.yaml
+  OS::TripleO::Controller::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_from_pool.yaml
+  OS::TripleO::Controller::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_mgmt_from_pool.yaml
+  OS::TripleO::Controller::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant_from_pool.yaml
+  #OS::TripleO::Controller::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management.yaml
 
-  OS::TripleO::Compute::Ports::ExternalPort: ../network/ports/noop.yaml
-  OS::TripleO::Compute::Ports::InternalApiPort: ../network/ports/internal_api_from_pool.yaml
-  OS::TripleO::Compute::Ports::StoragePort: ../network/ports/storage_from_pool.yaml
-  OS::TripleO::Compute::Ports::StorageMgmtPort: ../network/ports/noop.yaml
-  OS::TripleO::Compute::Ports::TenantPort: ../network/ports/tenant_from_pool.yaml
-  #OS::TripleO::Compute::Ports::ManagementPort: ../network/ports/management_from_pool.yaml
+  # Port assignments for the compute role
+  OS::TripleO::Compute::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external_from_pool.yaml
+  OS::TripleO::Compute::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api_from_pool.yaml
+  OS::TripleO::Compute::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_from_pool.yaml
+  OS::TripleO::Compute::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_from_pool.yaml
+  OS::TripleO::Compute::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant_from_pool.yaml
+  #OS::TripleO::Compute::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management.yaml
 
-  OS::TripleO::CephStorage::Ports::ExternalPort: ../network/ports/noop.yaml
-  OS::TripleO::CephStorage::Ports::InternalApiPort: ../network/ports/noop.yaml
-  OS::TripleO::CephStorage::Ports::StoragePort: ../network/ports/storage_from_pool.yaml
-  OS::TripleO::CephStorage::Ports::StorageMgmtPort: ../network/ports/storage_mgmt_from_pool.yaml
-  OS::TripleO::CephStorage::Ports::TenantPort: ../network/ports/noop.yaml
-  #OS::TripleO::CephStorage::Ports::ManagementPort: ../network/ports/management_from_pool.yaml
+  # Port assignments for the compute role
+  OS::TripleO::CephSuprmicr1::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external_from_pool.yaml
+  OS::TripleO::CephSuprmicr1::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api_from_pool.yaml
+  OS::TripleO::CephSuprmicr1::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_from_pool.yaml
+  OS::TripleO::CephSuprmicr1::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_from_pool.yaml
+  OS::TripleO::CephSuprmicr1::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant_from_pool.yaml
+  #OS::TripleO::Compute::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management.yaml
 
-  OS::TripleO::ObjectStorage::Ports::ExternalPort: ../network/ports/noop.yaml
-  OS::TripleO::ObjectStorage::Ports::InternalApiPort: ../network/ports/internal_api_from_pool.yaml
-  OS::TripleO::ObjectStorage::Ports::StoragePort: ../network/ports/storage_from_pool.yaml
-  OS::TripleO::ObjectStorage::Ports::StorageMgmtPort: ../network/ports/storage_mgmt_from_pool.yaml
-  OS::TripleO::ObjectStorage::Ports::TenantPort: ../network/ports/noop.yaml
-  #OS::TripleO::ObjectStorage::Ports::ManagementPort: ../network/ports/management_from_pool.yaml
+  # Port assignments for the compute role
+  OS::TripleO::ComputeHCIHP580G8V1::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external_from_pool.yaml
+  OS::TripleO::ComputeHCIHP580G8V1::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api_from_pool.yaml
+  OS::TripleO::ComputeHCIHP580G8V1::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_from_pool.yaml
+  OS::TripleO::ComputeHCIHP580G8V1::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_from_pool.yaml
+  OS::TripleO::ComputeHCIHP580G8V1::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant_from_pool.yaml
+  #OS::TripleO::Compute::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management.yaml
 
-  OS::TripleO::BlockStorage::Ports::ExternalPort: ../network/ports/noop.yaml
-  OS::TripleO::BlockStorage::Ports::InternalApiPort: ../network/ports/internal_api_from_pool.yaml
-  OS::TripleO::BlockStorage::Ports::StoragePort: ../network/ports/storage_from_pool.yaml
-  OS::TripleO::BlockStorage::Ports::StorageMgmtPort: ../network/ports/storage_mgmt_from_pool.yaml
-  OS::TripleO::BlockStorage::Ports::TenantPort: ../network/ports/noop.yaml
-  #OS::TripleO::BlockStorage::Ports::ManagementPort: ../network/ports/management_from_pool.yaml
+  # Port assignments for the compute role
+  OS::TripleO::ComputeHCIHP580G8V2::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external_from_pool.yaml
+  OS::TripleO::ComputeHCIHP580G8V2::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api_from_pool.yaml
+  OS::TripleO::ComputeHCIHP580G8V2::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_from_pool.yaml
+  OS::TripleO::ComputeHCIHP580G8V2::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_from_pool.yaml
+  OS::TripleO::ComputeHCIHP580G8V2::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant_from_pool.yaml
+  #OS::TripleO::Compute::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management.yaml
+
+  # Port assignments for the compute role
+  OS::TripleO::ComputeHCIHP580G8V3::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external_from_pool.yaml
+  OS::TripleO::ComputeHCIHP580G8V3::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api_from_pool.yaml
+  OS::TripleO::ComputeHCIHP580G8V3::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_from_pool.yaml
+  OS::TripleO::ComputeHCIHP580G8V3::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_from_pool.yaml
+  OS::TripleO::ComputeHCIHP580G8V3::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant_from_pool.yaml
+  #OS::TripleO::Compute::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management.yaml
+  
 
 parameter_defaults:
   ControllerIPs:
     # Each controller will get an IP from the lists below, first controller, first IP
     external:
-    - 10.0.0.251
+    - 10.209.81.105
+    - 10.209.81.112
+    - 10.209.81.107
     internal_api:
-    - 172.16.2.251
+    - 172.17.0.28
+    - 172.17.0.12
+    - 172.17.0.21
     storage:
-    - 172.16.1.251
+    - 172.18.0.24
+    - 172.18.0.17
+    - 172.18.0.15
     storage_mgmt:
-    - 172.16.3.251
+    - 172.19.0.15
+    - 172.19.0.10
+    - 172.19.0.21
     tenant:
-    - 172.16.0.251
+    - 172.16.0.22
+    - 172.16.0.19
+    - 172.16.0.17
     #management:
     #- 172.16.4.251
   NovaComputeIPs:
-    # Each compute will get an IP from the lists below, first compute, first IP
+    external:
+    - 10.209.81.100
+    - 10.209.81.109
+    - 10.209.81.118
     internal_api:
-    - 172.16.2.252
+    - 172.17.0.25
+    - 172.17.0.19
+    - 172.17.0.16
     storage:
-    - 172.16.1.252
+    - 172.18.0.27
+    - 172.18.0.16
+    - 172.18.0.21
+    storage_mgmt:
+    - 172.19.0.20
+    - 172.19.0.11
+    - 172.19.0.25
     tenant:
-    - 172.16.0.252
-    #management:
-    #- 172.16.4.252
-  CephStorageIPs:
-    # Each ceph node will get an IP from the lists below, first node, first IP
-    storage:
-    - 172.16.1.253
-    storage_mgmt:
-    - 172.16.3.253
-    #management:
-    #- 172.16.4.253
-  SwiftStorageIPs:
-    # Each swift node will get an IP from the lists below, first node, first IP
+    - 172.16.0.13
+    - 172.16.0.25
+    - 172.16.0.11
+  CephSuprmicr1IPs:
+    external:
+    - 10.209.81.119
+    - 10.209.81.106
+    - 10.209.81.103
     internal_api:
-    - 172.16.2.254
+    - 172.17.0.14
+    - 172.17.0.13
+    - 172.17.0.17
     storage:
-    - 172.16.1.254
+    - 172.18.0.30
+    - 172.18.0.20
+    - 172.18.0.10
     storage_mgmt:
-    - 172.16.3.254
-    #management:
-    #- 172.16.4.254
-  BlockStorageIPs:
-    # Each cinder node will get an IP from the lists below, first node, first IP
+    - 172.19.0.23
+    - 172.19.0.16
+    - 172.19.0.17
+    tenant:
+    - 172.16.0.14
+    - 172.16.0.18
+    - 172.16.0.12
+  ComputeHCIHP580G8V1IPs:
+    external:
+    - 10.209.81.114
     internal_api:
-    - 172.16.2.250
+    - 172.17.0.26
     storage:
-    - 172.16.1.250
+    - 172.18.0.11
     storage_mgmt:
-    - 172.16.3.250
-    #management:
-    #- 172.16.4.250
+    - 172.19.0.14
+    tenant:
+    - 172.16.0.20
+  ComputeHCIHP580G8V2IPs:
+    external:
+    - 10.209.81.121
+    internal_api:
+    - 172.17.0.29
+    storage:
+    - 172.18.0.26
+    storage_mgmt:
+    - 172.19.0.13
+    tenant:
+    - 172.16.0.30
+  ComputeHCIHP580G8V3IPs:
+    external:
+    - 10.209.81.110
+    internal_api:
+    - 172.17.0.18
+    storage:
+    - 172.18.0.13
+    storage_mgmt:
+    - 172.19.0.12
+    tenant:
+    - 172.16.0.16
+
+    
+    
+  # Predictable VIPs
+  ControlFixedIPs: [{'ip_address':'192.168.24.6'}]
+  InternalApiVirtualFixedIPs: [{'ip_address':'172.17.0.15'}]
+  PublicVirtualFixedIPs: [{'ip_address':'10.209.81.108'}]
+  StorageVirtualFixedIPs: [{'ip_address':'172.18.0.19'}]
+  StorageMgmtVirtualFixedIPs: [{'ip_address':'172.19.0.18'}]    
+

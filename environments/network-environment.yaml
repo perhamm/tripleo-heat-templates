@@ -1,59 +1,128 @@
 #This file is an example of an environment file for defining the isolated
 #networks and related parameters.
 resource_registry:
-  # Network Interface templates to use (these files must exist)
-  OS::TripleO::BlockStorage::Net::SoftwareConfig:
-    ../network/config/single-nic-vlans/cinder-storage.yaml
-  OS::TripleO::Compute::Net::SoftwareConfig:
-    ../network/config/single-nic-vlans/compute.yaml
-  OS::TripleO::Controller::Net::SoftwareConfig:
-    ../network/config/single-nic-vlans/controller.yaml
-  OS::TripleO::ObjectStorage::Net::SoftwareConfig:
-    ../network/config/single-nic-vlans/swift-storage.yaml
-  OS::TripleO::CephStorage::Net::SoftwareConfig:
-    ../network/config/single-nic-vlans/ceph-storage.yaml
 
+  # This section is usually not modified, if in doubt stick to the defaults
+  # TripleO overcloud networks
+  OS::TripleO::Network::External: /usr/share/openstack-tripleo-heat-templates/network/external.yaml
+  OS::TripleO::Network::InternalApi: /usr/share/openstack-tripleo-heat-templates/network/internal_api.yaml
+  OS::TripleO::Network::StorageMgmt: /usr/share/openstack-tripleo-heat-templates/network/storage_mgmt.yaml
+  OS::TripleO::Network::Storage: /usr/share/openstack-tripleo-heat-templates/network/storage.yaml
+  OS::TripleO::Network::Tenant: /usr/share/openstack-tripleo-heat-templates/network/tenant.yaml
+  #OS::TripleO::Network::Management: /usr/share/openstack-tripleo-heat-templates/network/management.yaml
+
+  # Port assignments for the VIPs
+  OS::TripleO::Network::Ports::ExternalVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external.yaml
+  OS::TripleO::Network::Ports::InternalApiVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api.yaml
+  OS::TripleO::Network::Ports::StorageVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage.yaml
+  OS::TripleO::Network::Ports::StorageMgmtVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_mgmt.yaml
+  OS::TripleO::Network::Ports::TenantVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant.yaml
+  #OS::TripleO::Network::Ports::ManagementVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management.yaml
+  OS::TripleO::Network::Ports::RedisVipPort: /usr/share/openstack-tripleo-heat-templates/network/ports/vip.yaml
+
+  # Port assignments for the controller role
+  OS::TripleO::Controller::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external.yaml
+  OS::TripleO::Controller::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api.yaml
+  OS::TripleO::Controller::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage.yaml
+  OS::TripleO::Controller::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_mgmt.yaml
+  OS::TripleO::Controller::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant.yaml
+  #OS::TripleO::Controller::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management.yaml
+
+  # Port assignments for the compute role
+  OS::TripleO::Compute::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external.yaml
+  OS::TripleO::Compute::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api.yaml
+  OS::TripleO::Compute::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage.yaml
+  OS::TripleO::Compute::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_mgmt.yaml
+  OS::TripleO::Compute::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant.yaml
+  #OS::TripleO::Compute::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management.yaml
+
+  # Port assignments for the compute role
+  OS::TripleO::CephSuprmicr1::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external.yaml
+  OS::TripleO::CephSuprmicr1::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api.yaml
+  OS::TripleO::CephSuprmicr1::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage.yaml
+  OS::TripleO::CephSuprmicr1::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_mgmt.yaml
+  OS::TripleO::CephSuprmicr1::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant.yaml
+  #OS::TripleO::Compute::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management.yaml
+
+  # Port assignments for the compute role
+  OS::TripleO::ComputeHCIHP580G8V1::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external.yaml
+  OS::TripleO::ComputeHCIHP580G8V1::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api.yaml
+  OS::TripleO::ComputeHCIHP580G8V1::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage.yaml
+  OS::TripleO::ComputeHCIHP580G8V1::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_mgmt.yaml
+  OS::TripleO::ComputeHCIHP580G8V1::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant.yaml
+  #OS::TripleO::Compute::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management.yaml
+
+  # Port assignments for the compute role
+  OS::TripleO::ComputeHCIHP580G8V2::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external.yaml
+  OS::TripleO::ComputeHCIHP580G8V2::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api.yaml
+  OS::TripleO::ComputeHCIHP580G8V2::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage.yaml
+  OS::TripleO::ComputeHCIHP580G8V2::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_mgmt.yaml
+  OS::TripleO::ComputeHCIHP580G8V2::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant.yaml
+  #OS::TripleO::Compute::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management.yaml
+
+  # Port assignments for the compute role
+  OS::TripleO::ComputeHCIHP580G8V3::Ports::ExternalPort: /usr/share/openstack-tripleo-heat-templates/network/ports/external.yaml
+  OS::TripleO::ComputeHCIHP580G8V3::Ports::InternalApiPort: /usr/share/openstack-tripleo-heat-templates/network/ports/internal_api.yaml
+  OS::TripleO::ComputeHCIHP580G8V3::Ports::StoragePort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage.yaml
+  OS::TripleO::ComputeHCIHP580G8V3::Ports::StorageMgmtPort: /usr/share/openstack-tripleo-heat-templates/network/ports/storage_mgmt.yaml
+  OS::TripleO::ComputeHCIHP580G8V3::Ports::TenantPort: /usr/share/openstack-tripleo-heat-templates/network/ports/tenant.yaml
+  #OS::TripleO::Compute::Ports::ManagementPort: /usr/share/openstack-tripleo-heat-templates/network/ports/management.yaml
+  
+
+
+  
+  # Network Interface templates to use (these files must exist)
+  OS::TripleO::Compute::Net::SoftwareConfig:
+    ../network/config/bond-with-vlans/compute.yaml
+  OS::TripleO::Controller::Net::SoftwareConfig:
+    ../network/config/bond-with-vlans/controller.yaml
+  OS::TripleO::CephSuprmicr1::Net::SoftwareConfig:
+    ../network/config/bond-with-vlans/CephSuprmicr1.yaml
+  OS::TripleO::ComputeHCIHP580G8V1::Net::SoftwareConfig:
+    ../network/config/bond-with-vlans/ComputeHCIHP580G8V1.yaml
+  OS::TripleO::ComputeHCIHP580G8V2::Net::SoftwareConfig:
+    ../network/config/bond-with-vlans/ComputeHCIHP580G8V2.yaml
+  OS::TripleO::ComputeHCIHP580G8V3::Net::SoftwareConfig:
+    ../network/config/bond-with-vlans/ComputeHCIHP580G8V3.yaml
+  
 parameter_defaults:
   # This section is where deployment-specific configuration is done
   # CIDR subnet mask length for provisioning network
   ControlPlaneSubnetCidr: '24'
   # Gateway router for the provisioning network (or Undercloud IP)
-  ControlPlaneDefaultRoute: 192.168.24.254
+  ControlPlaneDefaultRoute: 192.168.24.1
   EC2MetadataIp: 192.168.24.1  # Generally the IP of the Undercloud
   # Customize the IP subnets to match the local environment
   InternalApiNetCidr: 172.17.0.0/24
   StorageNetCidr: 172.18.0.0/24
   StorageMgmtNetCidr: 172.19.0.0/24
   TenantNetCidr: 172.16.0.0/24
-  ExternalNetCidr: 10.0.0.0/24
+  ExternalNetCidr: 10.209.81.0/24
   # Customize the VLAN IDs to match the local environment
-  InternalApiNetworkVlanID: 20
-  StorageNetworkVlanID: 30
-  StorageMgmtNetworkVlanID: 40
-  TenantNetworkVlanID: 50
-  ExternalNetworkVlanID: 10
+  InternalApiNetworkVlanID: 3031
+  StorageNetworkVlanID: 3032
+  StorageMgmtNetworkVlanID: 3033
+  TenantNetworkVlanID: 3034
+  ExternalNetworkVlanID: 81
   # Customize the IP ranges on each network to use for static IPs and VIPs
   InternalApiAllocationPools: [{'start': '172.17.0.10', 'end': '172.17.0.200'}]
   StorageAllocationPools: [{'start': '172.18.0.10', 'end': '172.18.0.200'}]
   StorageMgmtAllocationPools: [{'start': '172.19.0.10', 'end': '172.19.0.200'}]
   TenantAllocationPools: [{'start': '172.16.0.10', 'end': '172.16.0.200'}]
   # Leave room if the external network is also used for floating IPs
-  ExternalAllocationPools: [{'start': '10.0.0.10', 'end': '10.0.0.50'}]
+  ExternalAllocationPools: [{'start': '10.209.81.100', 'end': '10.209.81.149'}]
   # Gateway router for the external network
-  ExternalInterfaceDefaultRoute: 10.0.0.1
+  ExternalInterfaceDefaultRoute: 10.209.81.254
   # Uncomment if using the Management Network (see network-management.yaml)
   # ManagementNetCidr: 10.0.1.0/24
   # ManagementAllocationPools: [{'start': '10.0.1.10', 'end': '10.0.1.50'}]
   # Use either this parameter or ControlPlaneDefaultRoute in the NIC templates
   # ManagementInterfaceDefaultRoute: 10.0.1.1
   # Define the DNS servers (maximum 2) for the overcloud nodes
-  DnsServers: ["8.8.8.8","8.8.4.4"]
+  DnsServers: ["10.209.1.1","10.209.1.4"]
   # List of Neutron network types for tenant networks (will be used in order)
-  NeutronNetworkType: 'vxlan,vlan'
+  NeutronNetworkType: 'flat,vlan'
   # The tunnel type for the tenant network (vxlan or gre). Set to '' to disable tunneling.
-  NeutronTunnelTypes: 'vxlan'
+  NeutronTunnelTypes: ''
   # Neutron VLAN ranges per network, for example 'datacentre:1:499,tenant:500:1000':
-  NeutronNetworkVLANRanges: 'datacentre:1:1000'
-  # Customize bonding options, e.g. "mode=4 lacp_rate=1 updelay=1000 miimon=100"
-  # for Linux bonds w/LACP, or "bond_mode=active-backup" for OVS active/backup.
-  BondInterfaceOvsOptions: "bond_mode=active-backup"
+  NeutronNetworkVLANRanges: 'datacentre:3036:3055,tenant:3056:3070'

@@ -49,7 +49,7 @@ fi
 # of packages to update (the check for -z "$update_identifier" guarantees that this
 # is run only on overcloud stack update -i)
 if [[ "$pacemaker_status" == "active" && \
-        "$(hiera -c /etc/puppet/hiera.yaml pacemaker_short_bootstrap_node_name | tr '[:upper:]' '[:lower:]')" == "$(facter hostname | tr '[:upper:]' '[:lower:]')" ]] ; then \
+        "$(hiera -c /etc/puppet/hiera.yaml pacemaker_short_bootstrap_node_name)" == "$(facter hostname)" ]] ; then \
     # OCF scripts don't cope with -eu
     echo "Verifying if we need to fix up any IPv6 VIPs"
     set +eu
@@ -65,11 +65,9 @@ fi
 command_arguments=${command_arguments:-}
 
 # Always ensure yum has full cache
-check_for_yum_lock
 yum makecache || echo "Yum makecache failed. This can cause failure later on."
 
 # yum check-update exits 100 if updates are available
-check_for_yum_lock
 set +e
 check_update=$(yum check-update 2>&1)
 check_update_exit=$?
@@ -108,6 +106,9 @@ fi
 
 # special case https://bugs.launchpad.net/tripleo/+bug/1635205 +bug/1669714
 special_case_ovs_upgrade_if_needed
+
+# Resolve any RPM dependency issues before attempting the update
+yum_pre_update
 
 if [[ "$pacemaker_status" == "active" ]] ; then
     echo "Pacemaker running, stopping cluster node and doing full package update"

@@ -91,6 +91,7 @@ outputs:
       service_name: ceph_base
       config_settings:
         tripleo::profile::base::ceph::enable_ceph_storage: {get_param: ControllerEnableCephStorage}
+        ceph::profile::params::osd_pool_default_min_size: 1
         ceph::profile::params::osds: {/srv/data: {}}
         ceph::profile::params::manage_repo: false
         ceph::profile::params::authentication_type: cephx
@@ -100,7 +101,6 @@ outputs:
         ceph::params::packages:
           - ceph-base
           - ceph-mon
-          - ceph-osd
         # NOTE: bind IP is found in Heat replacing the network name with the local node IP
         # for the given network; replacement examples (eg. for internal_api):
         # internal_api -> IP
@@ -131,9 +131,7 @@ outputs:
                 cap_mon: 'allow profile bootstrap-osd'
               CEPH_CLIENT_KEY:
                 secret: {get_param: CephClientKey}
-                mode: '0640'
-                user: 'ceph'
-                group: 'ceph'
+                mode: '0644'
                 cap_mon: 'allow r'
                 cap_osd:
                   str_replace:
@@ -150,3 +148,8 @@ outputs:
       service_config_settings:
         glance_api:
           glance::api::show_multiple_locations: {if: [glance_multiple_locations, true, false]}
+        ceph_osd:
+          ceph::params::packages:
+          - ceph-base
+          - ceph-mon
+          - ceph-osd

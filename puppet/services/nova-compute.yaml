@@ -117,13 +117,15 @@ outputs:
             nova::compute::reserved_host_memory: {get_param: NovaReservedHostMemory}
             # we manage migration in nova common puppet profile
             nova::compute::libvirt::migration_support: false
+            nova::block_device_allocate_retries: 300
+            nova::block_device_allocate_retries_interval: 50
             tripleo::profile::base::nova::manage_migration: true
             tripleo::profile::base::nova::migration_ssh_key: {get_param: MigrationSshKey}
             tripleo::profile::base::nova::migration_ssh_localaddrs:
               - "%{hiera('cold_migration_ssh_inbound_addr')}"
               - "%{hiera('live_migration_ssh_inbound_addr')}"
-            live_migration_ssh_inbound_addr: {get_param: [ServiceNetMap, NovaApiNetwork]}
-            cold_migration_ssh_inbound_addr: {get_param: [ServiceNetMap, NovaApiNetwork]}
+            live_migration_ssh_inbound_addr: {get_param: [ServiceNetMap, NovaLibvirtNetwork]}
+            cold_migration_ssh_inbound_addr: {get_param: [ServiceNetMap, NovaColdMigrationNetwork]}
             tripleo::profile::base::nova::nova_compute_enabled: true
             nova::compute::rbd::libvirt_images_rbd_pool: {get_param: NovaRbdPoolName}
             nova::compute::rbd::libvirt_rbd_user: {get_param: CephClientUserName}
@@ -166,7 +168,7 @@ outputs:
         collectd:
           tripleo.collectd.plugins.nova_compute:
             - virt
-          collectd::plugin::virt::connection: 'qemu:///system'
+          collectd::plugins::virt::connection: "qemu:///system"
       upgrade_tasks:
         - name: Stop nova-compute service
           tags: step1
@@ -180,6 +182,9 @@ outputs:
               template: "dest=/etc/nova/nova.conf section=upgrade_levels option=compute value=LEVEL"
               params:
                 LEVEL: {get_param: UpgradeLevelNovaCompute}
+        - name: install openstack-nova-migration
+          tags: step3
+          yum: name=openstack-nova-migration state=latest
         - name: Start nova-compute service
           tags: step6
           service: name=openstack-nova-compute state=started

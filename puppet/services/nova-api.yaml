@@ -110,6 +110,8 @@ outputs:
                 - 13774
                 - 8775
           nova::keystone::authtoken::project_name: 'service'
+          nova::block_device_allocate_retries: 300
+          nova::block_device_allocate_retries_interval: 50
           nova::keystone::authtoken::password: {get_param: NovaPassword}
           nova::keystone::authtoken::auth_uri: {get_param: [EndpointMap, KeystoneInternal, uri] }
           nova::keystone::authtoken::auth_url: {get_param: [EndpointMap, KeystoneInternal, uri_no_suffix]}
@@ -189,7 +191,7 @@ outputs:
           register: bootstrap_node
         - name: set is_bootstrap_node fact
           tags: common
-          set_fact: is_bootstrap_node={{bootstrap_node.stdout|lower == ansible_hostname|lower}}
+          set_fact: is_bootstrap_node={{bootstrap_node.stdout == ansible_hostname}}
         - name: Extra migration for nova tripleo/+bug/1656791
           tags: step0,pre-upgrade
           when: is_bootstrap_node
